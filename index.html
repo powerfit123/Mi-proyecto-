@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PowerFit | Tienda Deportiva</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+html{scroll-behavior:smooth}
+body{background:#0d0d0d;color:#fff}
+nav{position:fixed;top:0;width:100%;background:#050505;display:flex;justify-content:space-between;align-items:center;padding:15px 7%;z-index:1000;border-bottom:1px solid #222}
+.logo{font-size:28px;font-weight:bold;color:#39ff14}
+nav ul{display:flex;list-style:none;gap:25px}
+nav a{color:white;text-decoration:none;font-weight:bold}
+nav a:hover{color:#39ff14}
+.cart-button{background:#39ff14;color:#000;border:0;padding:10px 16px;border-radius:8px;font-weight:bold;cursor:pointer}
+.hero{height:100vh;display:flex;justify-content:center;align-items:center;text-align:center;background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.8)),url("https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1600&q=80");background-size:cover;background-position:center}
+.hero h1{font-size:72px;color:#39ff14}.hero p{font-size:23px;margin:15px 0 28px}
+.btn{background:#39ff14;color:#000;padding:14px 25px;text-decoration:none;border-radius:8px;font-weight:bold}
+section{padding:90px 7%}.titulo{text-align:center;color:#39ff14;font-size:35px;margin-bottom:40px}
+.categorias{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:35px}
+.categorias button{background:#181818;color:#fff;border:1px solid #333;padding:10px 18px;border-radius:20px;cursor:pointer}
+.categorias button:hover{background:#39ff14;color:#000}
+.productos{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:25px}
+.producto{background:#181818;border-radius:12px;overflow:hidden;transition:.3s;border:1px solid #292929}
+.producto:hover{transform:translateY(-8px);border-color:#39ff14}
+.producto img{width:100%;height:240px;object-fit:cover;display:block}
+.producto-info{padding:20px}.producto h3{margin-bottom:8px}.categoria{font-size:13px;color:#aaa}
+.precio{color:#39ff14;font-size:22px;font-weight:bold;margin:12px 0 15px}
+.producto button{width:100%;padding:12px;background:#39ff14;border:0;border-radius:7px;cursor:pointer;font-weight:bold}
+.producto button:hover{background:#fff}
+.nosotros{text-align:center;max-width:800px;margin:auto;line-height:1.7}
+.contacto{text-align:center}.contacto p{margin:12px}
+.carrito{position:fixed;right:-420px;top:0;width:400px;height:100vh;background:#111;z-index:2000;padding:25px;transition:.4s;box-shadow:-5px 0 20px #000;overflow-y:auto}
+.carrito.activo{right:0}.cerrar{float:right;background:#f33;color:#fff;border:0;padding:7px 12px;border-radius:5px;cursor:pointer}
+.carrito h2{color:#39ff14;margin-bottom:25px}.item-carrito{display:flex;gap:12px;border-bottom:1px solid #333;padding:15px 0}
+.item-carrito img{width:70px;height:70px;object-fit:cover;border-radius:7px}.item-info{flex:1}.item-info h4{margin-bottom:5px}
+.cantidad{display:flex;align-items:center;gap:10px;margin-top:8px}.cantidad button{width:25px;height:25px;border:0;cursor:pointer}
+.eliminar{background:#f33;color:#fff;border:0;padding:5px;cursor:pointer;border-radius:4px}
+.total{font-size:23px;font-weight:bold;margin:25px 0;color:#39ff14}
+.whatsapp{display:block;width:100%;text-align:center;background:#25D366;color:#fff;padding:14px;border-radius:8px;text-decoration:none;font-weight:bold}
+footer{text-align:center;padding:25px;background:#050505;border-top:1px solid #222}
+@media(max-width:700px){nav ul{display:none}.hero h1{font-size:45px}.hero p{font-size:18px}.carrito{width:100%;right:-100%}}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="logo">POWERFIT</div>
+<ul>
+<li><a href="#inicio">Inicio</a></li><li><a href="#productos">Productos</a></li><li><a href="#nosotros">Nosotros</a></li><li><a href="#contacto">Contacto</a></li>
+</ul>
+<button class="cart-button" onclick="abrirCarrito()">🛒 Carrito (<span id="contador">0</span>)</button>
+</nav>
+
+<section class="hero" id="inicio">
+<div><h1>POWERFIT</h1><p>Ropa, calzado y accesorios para superar tus límites</p><a href="#productos" class="btn">Ver productos</a></div>
+</section>
+
+<section id="productos">
+<h2 class="titulo">Catálogo PowerFit</h2>
+<div class="categorias">
+<button onclick="filtrar('todos')">Todos</button>
+<button onclick="filtrar('ropa')">Ropa</button>
+<button onclick="filtrar('calzado')">Calzado</button>
+<button onclick="filtrar('futbol')">Fútbol</button>
+<button onclick="filtrar('accesorios')">Accesorios</button>
+</div>
+
+<div class="productos">
+
+<div class="producto" data-cat="calzado">
+<img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80" alt="Tenis deportivos">
+<div class="producto-info"><span class="categoria">CALZADO</span><h3>Tenis deportivos</h3><p>Para running y entrenamiento.</p><div class="precio">$180.000</div>
+<button onclick="agregarProducto('Tenis deportivos',180000,this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.src)">Agregar al carrito</button></div>
+</div>
+
+<div class="producto" data-cat="ropa">
+<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=80" alt="Camiseta deportiva">
+<div class="producto-info"><span class="categoria">ROPA</span><h3>Camiseta deportiva</h3><p>Ligera y cómoda para entrenar.</p><div class="precio">$75.000</div>
+<button onclick="agregarProducto('Camiseta deportiva',75000,this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.src)">Agregar al carrito</button></div>
+</div>
+
+<div class="producto" data-cat="ropa">
+<img src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?auto=format&fit=crop&w=700&q=80" alt="Conjunto deportivo">
+<div class="producto-info"><span class="categoria">ROPA</span><h3>Conjunto deportivo</h3><p>Conjunto para gimnasio y entrenamiento.</p><div class="precio">$135.000</div>
+<button onclick="agregarProducto('Conjunto deportivo',135000,this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.src)">Agregar al carrito</button></div>
+</div>
+
+<div class="producto" data-cat="calzado">
+<img src="https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=700&q=80" alt="Zapatillas running">
+<div class="producto-info"><span class="categoria">CALZADO</span><h3>Zapatillas Running</h3><p>Diseñadas para correr y entrenar.</p><div class="precio">$210.000</div>
+<button onclick="agregarProducto('Zapatillas Running',210000,this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.src)">Agregar al carrito</button></div>
+</div>
+
+<div class="producto" data-cat="futbol">
+<img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=700&q=80" alt="Balón de fútbol">
+<div class="producto-info"><span class="categoria">FÚTBOL</span><h3>Balón de fútbol</h3><p>Para entrenamiento y competición.</p><div class="precio">$95.000</div>
+<button onclick="agregarProducto('Balón de fútbol',95000,this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.src)">Agregar al carrito</button></div>
+</div>
+
+<div class="producto" data-cat="accesorios">
+<img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=700&q=80" alt="Accesorios fitness">
+<div class="producto-info"><span class="categoria">ACCESORIOS</span><h3>Accesorios fitness</h3><p>Equipo para tus entrenamientos.</p><div class="precio">$55.000</div>
+<button onclick="agregarProducto('Accesorios fitness',55000,this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.src)">Agregar al carrito</button></div>
+</div>
+
+<div class="producto" data-cat="accesorios">
+<img src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=700&q=80" alt="Botella deportiva">
+<div class="producto-info"><span class="categoria">ACCESORIOS</span><h3>Botella deportiva</h3><p>Ideal para acompañar tus entrenamientos.</p><div class="precio">$35.000</div>
+<button onclick="agregarProducto('Botella deportiva',35000,this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.src)">Agregar al carrito</button></div>
+</div>
+
+<div class="producto" data-cat="accesorios">
+<img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=700&q=80" alt="Guantes deportivos">
+<div class="producto-info"><span class="categoria">ACCESORIOS</span><h3>Guantes deportivos</h3><p>Para gimnasio y entrenamiento.</p><div class="precio">$48.000</div>
+<button onclick="agregarProducto('Guantes deportivos',48000,this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.src)">Agregar al carrito</button></div>
+</div>
+
+</div>
+</section>
+
+<section id="nosotros"><h2 class="titulo">Sobre PowerFit</h2><p class="nosotros">En PowerFit ofrecemos ropa, calzado y accesorios deportivos para acompañarte en cada entrenamiento. Nuestra tienda busca combinar comodidad, estilo y funcionalidad para quienes disfrutan del deporte y de un estilo de vida activo.</p></section>
+
+<section id="contacto"><h2 class="titulo">Contacto</h2><div class="contacto"><p>📍 Yumbo, Valle del Cauca</p><p>📱 WhatsApp: 300 000 0000</p><p>📧 Email: powerfit@gmail.com</p><p>📸 Instagram: @powerfit</p></div></section>
+
+<div class="carrito" id="carrito"><button class="cerrar" onclick="cerrarCarrito()">X</button><h2>🛒 Mi carrito</h2><div id="listaCarrito"></div><div class="total">Total: $<span id="total">0</span></div><a id="whatsapp" class="whatsapp" href="#" target="_blank">Finalizar pedido por WhatsApp</a></div>
+
+<footer><p>© 2026 PowerFit - Tu pasión, tu fuerza</p></footer>
+
+<script>
+let carrito=JSON.parse(localStorage.getItem("carrito"))||[];
+function guardarCarrito(){localStorage.setItem("carrito",JSON.stringify(carrito))}
+function agregarProducto(nombre,precio,imagen){let p=carrito.find(x=>x.nombre===nombre);p?p.cantidad++:carrito.push({nombre,precio,imagen,cantidad:1});guardarCarrito();mostrarCarrito();abrirCarrito()}
+function mostrarCarrito(){let lista=document.getElementById("listaCarrito"),total=0,cantidad=0;lista.innerHTML="";carrito.forEach((p,i)=>{let sub=p.precio*p.cantidad;total+=sub;cantidad+=p.cantidad;lista.innerHTML+=`<div class="item-carrito"><img src="${p.imagen}"><div class="item-info"><h4>${p.nombre}</h4><p>$${p.precio.toLocaleString("es-CO")}</p><div class="cantidad"><button onclick="cambiarCantidad(${i},-1)">-</button><span>${p.cantidad}</span><button onclick="cambiarCantidad(${i},1)">+</button><button class="eliminar" onclick="eliminarProducto(${i})">🗑️</button></div></div></div>`});document.getElementById("contador").textContent=cantidad;document.getElementById("total").textContent=total.toLocaleString("es-CO");actualizarWhatsApp()}
+function cambiarCantidad(i,c){carrito[i].cantidad+=c;if(carrito[i].cantidad<=0)carrito.splice(i,1);guardarCarrito();mostrarCarrito()}
+function eliminarProducto(i){carrito.splice(i,1);guardarCarrito();mostrarCarrito()}
+function abrirCarrito(){document.getElementById("carrito").classList.add("activo")}
+function cerrarCarrito(){document.getElementById("carrito").classList.remove("activo")}
+function actualizarWhatsApp(){let mensaje="Hola PowerFit! Quiero realizar este pedido:%0A%0A",total=0;carrito.forEach(p=>{let sub=p.precio*p.cantidad;total+=sub;mensaje+=`- ${p.nombre} x${p.cantidad}: $${sub.toLocaleString("es-CO")}%0A`});mensaje+=`%0ATotal: $${total.toLocaleString("es-CO")}`;document.getElementById("whatsapp").href=`https://wa.me/573000000000?text=${mensaje}`}
+function filtrar(cat){document.querySelectorAll(".producto").forEach(p=>{p.style.display=(cat==="todos"||p.dataset.cat===cat)?"block":"none"})}
+mostrarCarrito();
+</script>
+</body>
+</html>
